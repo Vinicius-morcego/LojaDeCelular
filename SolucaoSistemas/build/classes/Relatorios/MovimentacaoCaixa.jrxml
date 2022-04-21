@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MovimentacaoCaixa" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d66199b3-74b3-4b4b-af01-852e43835701">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="247"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Banco"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\SolucaoSistemas\\src\\Relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataInicial" class="java.lang.String"/>
+	<parameter name="dataFinal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select (select coalesce(sum(e.valor), 0) from entrada e inner join caixa c on c.codigo = e.caixa where to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}' and
+ e.formapgto in('95') or to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}' and e.formapgto in('144') or to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}' and e.formapgto in('145') or to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}' and e.formapgto in('146')
+or to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}' and e.formapgto in('153')) as entradas,
+coalesce(sum(s.valor), 0) as saidas, (select coalesce(sum(e.valor), 0) from entrada e inner join caixa c on c.codigo = e.caixa
+where to_char(c.data_lancamento, 'yyyy-mm-dd') < '$P!{dataInicial}' and e.formapgto in('155') or to_char(c.data_lancamento, 'yyyy-mm-dd') < '$P!{dataInicial}' and e.formapgto in('95') or to_char(c.data_lancamento, 'yyyy-mm-dd') < '$P!{dataInicial}' and e.formapgto in('144') or to_char(c.data_lancamento, 'yyyy-mm-dd') < '$P!{dataInicial}' and e.formapgto in('145') or to_char(c.data_lancamento, 'yyyy-mm-dd') < '$P!{dataInicial}' and e.formapgto in('146')) - (select coalesce(sum(s.valor), 0) from saida s inner join caixa c on c.codigo = s.caixa
+where to_char(c.data_lancamento, 'yyyy-mm-dd') < '$P!{dataInicial}') as saldoanterior, (select coalesce(sum(e.valor), 0.0) from entrada e inner join caixa c on c.codigo = e.caixa
+where e.formapgto = 142 and to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}') as credito, (select coalesce(sum(e.valor), 0.0) from entrada e inner join caixa c on c.codigo = e.caixa
+where e.formapgto = 141 and to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}') as debito, (select coalesce(sum(e.valor), 0.0) from entrada e inner join caixa c on c.codigo = e.caixa
+where e.formapgto = 145 and to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}') as recarga,
+(select coalesce(sum(e.valor), 0.0) from entrada e inner join caixa c on c.codigo = e.caixa
+where e.formapgto = 144 and to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}') as chip,
+(select coalesce(sum(e.valor), 0.0) from entrada e inner join caixa c on c.codigo = e.caixa
+where e.formapgto = 146 and to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}') as xerox from saida s inner join caixa c on c.codigo = s.caixa
+where to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}']]>
+	</queryString>
+	<field name="entradas" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="entradas"/>
+	</field>
+	<field name="saidas" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="saidas"/>
+	</field>
+	<field name="saldoanterior" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="saldoanterior"/>
+	</field>
+	<field name="credito" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="credito"/>
+	</field>
+	<field name="debito" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="debito"/>
+	</field>
+	<field name="recarga" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="recarga"/>
+	</field>
+	<field name="chip" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="chip"/>
+	</field>
+	<field name="xerox" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="xerox"/>
+	</field>
+	<variable name="resultado" class="java.lang.Double">
+		<variableExpression><![CDATA[($F{saldoanterior}+($F{entradas} - $F{saidas}))]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="333" y="0" width="177" height="20" uuid="5d31c9eb-3de7-41cb-b1f5-25cf2571214d"/>
+				<textElement>
+					<font fontName="Arial" size="16"/>
+				</textElement>
+				<text><![CDATA[Movimento do Caixa]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="20" width="802" height="1" uuid="82f0de51-d352-4853-9b44-30d31e3d626f"/>
+			</line>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="602" y="2" width="200" height="20" uuid="20c53346-f5c4-4180-9b0f-c8fcab8c2f9c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="24">
+			<subreport>
+				<reportElement x="29" y="0" width="746" height="24" uuid="d23b5e88-ee15-40de-b628-508331733725"/>
+				<subreportParameter name="inicio">
+					<subreportParameterExpression><![CDATA[$P{dataInicial}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fim">
+					<subreportParameterExpression><![CDATA[$P{dataFinal}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CaixaDetalhado.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="647" y="7" width="78" height="20" uuid="433ff7a8-e258-4c33-b642-d1ad09be756f"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Saídas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="725" y="7" width="77" height="20" uuid="26d6a1e2-39a5-4e95-b23f-aa700b3fcd3f"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Saldo:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="647" y="27" width="78" height="20" uuid="44315460-92e6-47ce-9778-a702a525c633"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saidas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="725" y="27" width="77" height="20" uuid="95549aca-9e60-48ea-91a3-c6b736a49e9a"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{resultado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="579" y="7" width="68" height="20" uuid="b915c2f9-c8d7-435e-b20a-13973d9335d3"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Entradas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="7" width="87" height="20" uuid="dcbbf440-3fd0-4690-a95e-0a7eb5fe7d5e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Saldo Anterior:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="579" y="27" width="68" height="20" uuid="224c3dcd-a714-404b-b30d-e1c23787f11e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="492" y="27" width="87" height="20" uuid="f3e1a2c0-acea-4911-9acb-5bdb08e70ef0"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldoanterior}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="3" width="802" height="1" uuid="e9a58fc9-3b4b-465b-ab83-6e474608d311"/>
+			</line>
+			<staticText>
+				<reportElement x="283" y="7" width="100" height="20" uuid="267ba324-505d-4438-97d6-2b1ff432b71c"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Cartão de Crédito:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="7" width="100" height="20" uuid="6ab3c0e9-b5f0-4a19-9073-f2585b631f8f"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Cartão de Débito:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="283" y="27" width="100" height="20" uuid="e3bb827d-7248-44fa-a33b-7b887a10940b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{credito}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="388" y="27" width="100" height="20" uuid="11cb5671-5512-4bbb-892a-0b6f3e3f995e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{debito}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="223" y="7" width="60" height="20" uuid="e63f784e-4dbb-45e1-8b72-49b9cc23a425"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Xerox:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="154" y="7" width="69" height="20" uuid="f2e9cb94-229a-4171-b9ec-f55ce64dc046"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Chip:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="223" y="27" width="60" height="20" uuid="06ecca50-f293-4980-8c09-bd49e49344da"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{xerox}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="154" y="27" width="69" height="20" uuid="84b79150-096c-4a1a-a676-fa2e61790192"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{chip}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="7" width="76" height="20" uuid="549f368a-8116-431f-a9fe-066512e92902"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Recarga:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="78" y="28" width="76" height="20" uuid="30145cba-5bd5-4f88-b381-2f1634928bbf"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{recarga}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

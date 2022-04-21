@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GraficoPizza" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06d903b8-4c8f-4e6f-8f02-c22d457089ab">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+(coalesce(sum(e.valor),0) - coalesce(sum(s.valor),0)) as saldo, extract(month from c.data_lancamento) as meses,
+case extract(month from c.data_lancamento)
+when 1 then 'Janeiro'
+when 2 then 'Fevereiro'
+when 3 then 'Março'
+when 4 then 'Abril'
+when 5 then 'Maio'
+when 6 then 'Junho'
+when 7 then 'Julho'
+when 8 then 'Agosto'
+when 9 then 'Setembro'
+when 10 then 'Outubro'
+when 11 then 'Novembro'
+when 12 then 'Dezembro'
+end as mes from caixa c left join entrada e on e.caixa = c.codigo
+left join saida s on s.caixa = c.codigo where to_char(c.data_lancamento, 'yyyy-mm-dd')
+between '$P!{dataInicial}' and '$P!{dataFinal}' group by mes, meses order by meses;]]>
+	</queryString>
+	<field name="saldo" class="java.lang.Double"/>
+	<field name="meses" class="java.lang.Double"/>
+	<field name="mes" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="114" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0d84d71a-fb44-47a1-be9f-8318850eed5a" x="0" y="0" width="802" height="41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Balanço Financeiro]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="3b05ec48-0d6c-417d-a99c-6a5db308e670" x="0" y="40" width="802" height="1"/>
+			</line>
+		</band>
+	</title>
+	<summary>
+		<band height="280" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement uuid="21bac83e-caf2-4184-8019-39ff5a47e4b7" isPrintRepeatedValues="false" x="0" y="0" width="802" height="280"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{mes}]]></keyExpression>
+					<valueExpression><![CDATA[$F{saldo}]]></valueExpression>
+				</pieDataset>
+				<piePlot isCircular="true">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

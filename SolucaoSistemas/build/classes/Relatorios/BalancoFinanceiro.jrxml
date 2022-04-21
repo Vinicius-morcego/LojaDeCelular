@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BalancoFinanceiro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1719d0b2-57c6-4a97-a5cc-dcef1cb1ea8b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicial" class="java.lang.String"/>
+	<parameter name="dataFinal" class="java.lang.String"/>
+	<parameter name="dataBR1" class="java.lang.String"/>
+	<parameter name="dataBR2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select coalesce(sum(e.valor), 0) as receitas, (coalesce(sum(s.valor), 0)) as despesas,
+(coalesce(sum(e.valor),0) - coalesce(sum(s.valor), 0)) as saldo, extract(month from c.data_lancamento) as meses,
+case extract(month from c.data_lancamento)
+when 1 then 'Janeiro'
+when 2 then 'Fevereiro'
+when 3 then 'Março'
+when 4 then 'Abril'
+when 5 then 'Maio'
+when 6 then 'Junho'
+when 7 then 'Julho'
+when 8 then 'Agosto'
+when 9 then 'Setembro'
+when 10 then 'Outubro'
+when 11 then 'Novembro'
+when 12 then 'Dezembro'
+end as mes from caixa c left join entrada e on e.caixa = c.codigo
+left join saida s on s.caixa = c.codigo
+where to_char(c.data_lancamento, 'yyyy-mm-dd')
+between '$P!{dataInicial}' and '$P!{dataFinal}' group by mes, meses order by meses;]]>
+	</queryString>
+	<field name="receitas" class="java.lang.Double"/>
+	<field name="despesas" class="java.lang.Double"/>
+	<field name="saldo" class="java.lang.Double"/>
+	<field name="meses" class="java.lang.Double"/>
+	<field name="mes" class="java.lang.String"/>
+	<variable name="receita" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{receitas}]]></variableExpression>
+	</variable>
+	<variable name="despesa" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{despesas}]]></variableExpression>
+	</variable>
+	<variable name="saldo" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{saldo}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="332" y="0" width="129" height="18" uuid="5bfb64cd-cc71-4377-8020-6854f1dd3c6e"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Balanço Financeiro]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="37">
+			<staticText>
+				<reportElement x="0" y="0" width="51" height="14" uuid="4595167e-69f0-493c-850f-c03e5a895d83"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="51" y="0" width="68" height="14" uuid="ebd3f970-13bd-45ed-909e-c7020a9eccc8"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="119" y="0" width="23" height="14" uuid="8014539f-72ae-4ae8-96ec-2768057c2e57"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[até:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="23" width="100" height="14" uuid="2b2e9709-9217-4cd3-9041-434fe6577497"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Mês:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="23" width="150" height="14" uuid="aa2b29d4-3ee6-4b91-b3ea-3533cef291ad"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Receitas R$:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="23" width="158" height="14" uuid="6fb52e35-d2d4-4475-8f04-dc6727f551a8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Despesas R$:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="698" y="23" width="93" height="14" uuid="1e6b00cb-4b23-4d76-abbc-8ab9f5fe86ca"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Saldo R$:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="149" y="0" width="100" height="14" uuid="8d48878e-0883-4e93-898b-78cf22c76750"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR2}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="16" width="802" height="1" uuid="026557f3-8020-474b-b6c0-99654c781956"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="16" backcolor="#CCCCFF" uuid="5145a2e5-9c63-4b5d-8d0c-ff6883bd8ac5">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 1)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0.00">
+				<reportElement x="140" y="1" width="150" height="14" uuid="f21a1d78-5805-4a7a-bfc2-b74b0de66838"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{receitas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="100" height="14" uuid="05b845e1-34c7-4e70-a499-c41e13d8b31f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="698" y="1" width="93" height="14" uuid="8cd724aa-4928-465e-93de-109adf939555"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="461" y="1" width="158" height="14" uuid="0b05fa00-dae2-4817-aba8-a04fe0680a09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{despesas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="3" width="802" height="1" uuid="c723ba66-cd1c-4a86-8d62-ce4baea39d45"/>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="140" y="6" width="150" height="14" uuid="684d9825-a5ab-48a5-943b-f6f8420a78c7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{receita}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="461" y="6" width="158" height="14" uuid="7e3911b5-f662-4bd5-9b8a-19f358ff2863"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{despesa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="698" y="6" width="93" height="14" uuid="264580a6-ff56-4f3a-a5ba-2a4d9b16169d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{saldo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="6" width="100" height="14" uuid="f7ab38e6-9ff9-4149-8499-00e0ffe71ccc"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Total R$:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estoqueNormal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="646e1419-1783-44af-a36e-6d10ecd0aae3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tipo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct p.codigo, p.nome as descricao, p.categoria, p.marca, p.estoqueminimo, e.estoqueatual as quantidade from produto_servico p inner join estoque e on e.produto = p.codigo where p.tipo = '$P!{tipo}' and p.estoqueminimo < e.estoqueatual order by p.categoria, p.nome, p.marca;]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="categoria" class="java.lang.String"/>
+	<field name="marca" class="java.lang.String"/>
+	<field name="estoqueminimo" class="java.lang.Double"/>
+	<field name="quantidade" class="java.lang.Double"/>
+	<variable name="variable1" class="java.lang.Double" resetType="Group" resetGroup="categoriaEstoque" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidade}]]></variableExpression>
+	</variable>
+	<variable name="variable2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidade}]]></variableExpression>
+	</variable>
+	<group name="categoriaEstoque">
+		<groupExpression><![CDATA[$F{categoria}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<textField>
+					<reportElement x="1" y="0" width="554" height="14" uuid="331d2c32-0f90-4a28-91d4-0fae4cd05d07"/>
+					<textElement>
+						<font fontName="Times New Roman" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="392" y="17" width="82" height="12" uuid="c0216e1f-51f7-4582-b275-cdcd9e617ab4"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[ESTOQUE MÍNIMO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="43" y="17" width="123" height="12" uuid="7a86712b-77f0-41cb-bc39-cb8c4a996403"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[DESCRIÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="474" y="17" width="81" height="12" uuid="ed14d600-a1a8-4226-ba68-5e7a8bb33a82"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[ESTOQUE ATUAL:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="17" width="42" height="12" uuid="18053628-7c02-4f15-ab03-c4c1cbc7e7a4"/>
+					<textElement>
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[CÓDIGO]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="9cba85a9-abe2-4f44-9d9b-bb2fa6d1c3c0"/>
+				</line>
+				<staticText>
+					<reportElement x="293" y="17" width="99" height="12" uuid="c86daa69-e565-4742-b90f-70b24a42b71c"/>
+					<textElement textAlignment="Left">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<text><![CDATA[MARCA:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<textField pattern="###0">
+					<reportElement x="474" y="0" width="81" height="14" uuid="070bf1fa-caa1-411f-965e-8f81aaee35a0"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="1" width="554" height="14" uuid="773bfaee-5156-41fe-a6d9-667be145a6eb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTOQUE NORMAL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="14" backcolor="#CCCCFF" uuid="645d13f5-02ba-4430-9cc7-d14163bc639c">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 1)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="290" y="0" width="100" height="14" uuid="013047cd-e068-4956-8e3b-f6f057f5243e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="403" y="0" width="69" height="14" uuid="287c6998-d6fa-4601-9b45-f2761b8aab40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estoqueminimo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="0" width="250" height="14" uuid="7031703b-afec-4976-af1d-6c9ce2405411"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0">
+				<reportElement x="472" y="0" width="81" height="14" uuid="952dee38-c93e-43c8-9f75-4b54467e122f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="41" height="14" uuid="e990e675-00a6-4677-9727-d909c3643b57"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="374" y="0" width="100" height="14" uuid="f8e16199-e32c-42e2-b06b-936e2288f768"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField pattern="###0">
+				<reportElement x="474" y="0" width="81" height="14" uuid="dc87e459-8906-4f8d-8960-119442f09d8a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

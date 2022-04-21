@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GraficoLinha" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a75aa841-392e-42fb-b0dc-8bf65aee0ac9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="71"/>
+	<parameter name="dataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct
+(coalesce(sum(e.valor),0) - coalesce(sum(s.valor),0)) as saldo, extract(month from c.datacadastro) as meses,
+case extract(month from c.datacadastro)
+when 1 then 'Janeiro'
+when 2 then 'Fevereiro'
+when 3 then 'Março'
+when 4 then 'Abril'
+when 5 then 'Maio'
+when 6 then 'Junho'
+when 7 then 'Julho'
+when 8 then 'Agosto'
+when 9 then 'Setembro'
+when 10 then 'Outubro'
+when 11 then 'Novembro'
+when 12 then 'Dezembro'
+end as mes from caixa c left join entrada e on e.caixa = c.codigo
+left join saida s on s.caixa = c.codigo where to_char(c.datacadastro, 'yyyy-mm-dd')
+between '$P!{dataInicial}' and '$P!{dataFinal}' group by mes, meses order by meses;]]>
+	</queryString>
+	<field name="saldo" class="java.lang.Double"/>
+	<field name="meses" class="java.lang.Double"/>
+	<field name="mes" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d65c73a5-1086-4d3d-9c9a-b69bb6df93be" x="0" y="0" width="802" height="41"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Balanço Financeiro]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="80ed19ef-9d35-4aeb-b28c-bbbc4d654c03" x="0" y="40" width="802" height="1"/>
+			</line>
+		</band>
+	</title>
+	<summary>
+		<band height="324">
+			<lineChart>
+				<chart evaluationTime="Report" renderType="image" theme="default">
+					<reportElement uuid="78081dc7-0db1-4de9-a32e-bcaac0e8904c" isPrintRepeatedValues="false" x="0" y="11" width="802" height="308"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{mes}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{mes}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{saldo}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true" isShowShapes="true">
+					<plot/>
+					<categoryAxisLabelExpression><![CDATA[]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="true">
+							<labelFont>
+								<font isUnderline="false" isStrikeThrough="false" pdfFontName="Courier" pdfEncoding="Cp1250"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</summary>
+</jasperReport>

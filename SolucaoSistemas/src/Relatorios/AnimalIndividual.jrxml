@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnimalIndividual" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="09fe54cb-88ef-4736-b353-20b4e3853e69">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cod" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.codigo, a.nome, a.peso, a.sexo, a.especie, a.raca, a.identificacao, a.alimentacao,
+a.fobia, a.historico, a.comportamento, a.rotina, p.nome as dono, a.observacao, v.vacina,
+to_char(v.data_aplic, 'dd/mm/yyyy') as aplicar, v.dose, a.nascimento, a.disponivel_tosa, a.possui_pedigree, a.restricao, a.falecido, a.agressivo, a.hiperativo, a.anti_social, a.obsessivo,
+(select logotipo from relatorio_config where codigo = 1) as logo, (select telefone1 from relatorio_config where codigo = 1) as tel1, (select telefone2 from relatorio_config where codigo = 1) as tel2, a.foto from animais a
+inner join pessoa p on p.codigo = a.dono
+inner join vacina_animal v on v.animal = a.codigo
+where a.codigo = $P!{cod} order by aplicar;]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="peso" class="java.lang.Double"/>
+	<field name="sexo" class="java.lang.String"/>
+	<field name="especie" class="java.lang.String"/>
+	<field name="raca" class="java.lang.String"/>
+	<field name="identificacao" class="java.lang.String"/>
+	<field name="alimentacao" class="java.lang.String"/>
+	<field name="fobia" class="java.lang.String"/>
+	<field name="historico" class="java.lang.String"/>
+	<field name="comportamento" class="java.lang.String"/>
+	<field name="rotina" class="java.lang.String"/>
+	<field name="dono" class="java.lang.String"/>
+	<field name="observacao" class="java.lang.String"/>
+	<field name="vacina" class="java.lang.String"/>
+	<field name="aplicar" class="java.lang.String"/>
+	<field name="dose" class="java.lang.String"/>
+	<field name="nascimento" class="java.lang.String"/>
+	<field name="disponivel_tosa" class="java.lang.String"/>
+	<field name="possui_pedigree" class="java.lang.String"/>
+	<field name="restricao" class="java.lang.String"/>
+	<field name="falecido" class="java.lang.String"/>
+	<field name="agressivo" class="java.lang.String"/>
+	<field name="hiperativo" class="java.lang.String"/>
+	<field name="anti_social" class="java.lang.String"/>
+	<field name="obsessivo" class="java.lang.String"/>
+	<field name="logo" class="java.lang.Object"/>
+	<field name="tel1" class="java.lang.String"/>
+	<field name="tel2" class="java.lang.String"/>
+	<field name="foto" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<image scaleImage="FillFrame" isUsingCache="true" isLazy="true" onErrorType="Icon">
+				<reportElement uuid="c9caa27d-93ee-4414-99c9-2d7e4c3fda77" x="2" y="2" width="100" height="61"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream((byte[]) $F{logo})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="d7ed28e3-fdb3-4e9e-a0eb-538b54096388" x="209" y="38" width="161" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ficha Cadastral do Animal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="11b67aee-448a-4586-be4e-bf9ab2299b45" x="106" y="10" width="67" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Telefones:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d3361415-0d39-430b-816c-ed1558405399" x="106" y="24" width="93" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tel1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0aa72a82-e627-4bc3-9571-0ee231308d9c" x="106" y="38" width="93" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tel2}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" isUsingCache="true" isLazy="true" onErrorType="Icon">
+				<reportElement uuid="78dcc690-1003-4814-aeed-03969ad0bf65" x="414" y="3" width="141" height="74"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream((byte[]) $F{foto})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="319">
+			<staticText>
+				<reportElement uuid="2cd430f8-9ba4-4b9e-b992-ade92fd3c56c" x="6" y="3" width="48" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5af11704-690d-48eb-ab79-ee925cb92ac2" x="54" y="3" width="52" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1b019b83-325d-4064-abef-cea711defd86" x="106" y="3" width="40" height="14"/>
+				<textElement/>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5ebd86ae-937e-489d-817e-2015382ef524" x="146" y="3" width="298" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f81213f6-fdb5-4b01-b886-84e6ab49c0dc" x="444" y="3" width="32" height="14"/>
+				<textElement/>
+				<text><![CDATA[Peso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e3c2874a-4108-4e83-abba-11402a3b00a0" x="444" y="17" width="39" height="14"/>
+				<textElement/>
+				<text><![CDATA[Sexo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e71886fd-5973-4a4d-854f-b1154c159c1d" x="483" y="17" width="55" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ffa5d0ef-d8e5-4ad2-9473-77d5798e57f2" x="6" y="17" width="48" height="14"/>
+				<textElement/>
+				<text><![CDATA[Especie:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="3cccf4cb-f947-41fc-a5a3-137fba116af5" x="54" y="17" width="159" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{especie}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="1f7b6a80-8fe7-4e34-87ed-687814c432d7" x="213" y="17" width="36" height="14"/>
+				<textElement/>
+				<text><![CDATA[Raça:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5d9fa4d3-92f3-4842-b373-23bbcd79dbf9" x="250" y="17" width="194" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{raca}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a559cad3-ec72-494d-a692-06b3f386d8ed" x="6" y="31" width="72" height="14"/>
+				<textElement/>
+				<text><![CDATA[Identificação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="44739065-fef9-4c3e-93e1-cd2ece2f62e7" x="78" y="31" width="366" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{identificacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dec936ab-59e5-46d3-9e59-36f76148e5a9" x="6" y="45" width="72" height="14"/>
+				<textElement/>
+				<text><![CDATA[Alimentação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4cd26540-aec0-4290-9489-5afdfbc842c7" x="78" y="45" width="366" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{alimentacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7b1ba422-ae21-411e-ab1f-05f5c796d6a7" x="6" y="59" width="48" height="14"/>
+				<textElement/>
+				<text><![CDATA[Fobia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9da1523c-8fca-4a8b-9d4e-100cc482a85a" x="54" y="59" width="390" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fobia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8dfde1ff-f4b8-40f0-91da-73211b0c9e73" x="298" y="196" width="89" height="14"/>
+				<textElement/>
+				<text><![CDATA[Disponível p/ tosa:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9c258e67-beb9-4e3c-9adc-4a1f67c9db10" x="411" y="196" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disponivel_tosa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="392c6cbb-5a24-465f-a7aa-162ff54da53d" x="405" y="196" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eeb99d33-7d0a-4310-be43-1bfcdea1a468" x="426" y="196" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fa5d0efd-baa4-4c5d-8132-1b6b28a8eb16" x="298" y="210" width="86" height="14"/>
+				<textElement/>
+				<text><![CDATA[Possui Pedigree:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1785dbd8-b701-4fbd-b184-12db72482722" x="405" y="210" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e7800378-bb35-4608-8c2d-3f32d9cd0bfa" x="411" y="210" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{possui_pedigree}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="57fd2e32-83b3-4fd0-8dc2-132dcafbc8ec" x="426" y="210" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="27fea750-028c-4d13-b394-6e53c1f35826" x="298" y="224" width="107" height="14"/>
+				<textElement/>
+				<text><![CDATA[Restrições/Problemas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3ebad926-52ee-44ea-8a20-28138aa006fa" x="405" y="224" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="afa3a5e2-ec18-4691-9a7d-07d9e2f1de89" x="411" y="224" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{restricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4892d4ad-7ab1-4127-9678-0ecc54027358" x="426" y="224" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="542ca447-a288-43c0-b2c9-972b27d51099" x="298" y="238" width="48" height="14"/>
+				<textElement/>
+				<text><![CDATA[Falecido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fb540ec3-2fa7-44a5-8e3c-920750b34888" x="405" y="238" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="881fe562-c36b-41b4-a428-b8cec49065ac" x="411" y="238" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{falecido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8447ff53-aeed-4528-8816-98d0f4d7a905" x="426" y="238" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2ad7aeed-e20f-46c6-ba09-a875f031684b" x="440" y="197" width="54" height="14"/>
+				<textElement/>
+				<text><![CDATA[Agressivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8e69835f-cc94-48e9-aa36-80a745ecaeb3" x="494" y="197" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c8f29da7-55f6-45e4-95cf-91621ed313fa" x="500" y="197" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{agressivo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ce328257-7d8c-4add-8e99-2d0283d33b77" x="515" y="197" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2378673d-7d56-4537-a3e0-ab94ec2d273c" x="440" y="211" width="54" height="14"/>
+				<textElement/>
+				<text><![CDATA[Hiperativo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d791412-2724-4624-8143-d5a887552044" x="494" y="211" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="515a762a-a339-4491-930c-d52e19727c94" x="500" y="211" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{hiperativo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="12e847b2-8e0d-4dc7-be24-ca8002aa2b24" x="515" y="211" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="31743015-1e0e-4ade-932f-df3edb974f6c" x="440" y="225" width="54" height="14"/>
+				<textElement/>
+				<text><![CDATA[Anti-social:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d382198c-2126-4795-bad8-7e85322932f7" x="494" y="225" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8ab8855e-877f-4cfa-9bc4-3ab2cced6019" x="500" y="225" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{anti_social}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9090dee4-2e0b-42ce-a28a-e718390b2a75" x="515" y="225" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7037bc6a-c235-46ba-bb90-aafb27fa45e3" x="440" y="239" width="54" height="14"/>
+				<textElement/>
+				<text><![CDATA[Obsessivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d3d7def4-85bb-4fe6-a081-f7e940286b8a" x="494" y="239" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[(]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c35eb474-4fcd-4297-af4b-cd11ca2aa845" x="500" y="239" width="15" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{obsessivo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="2d1e3d05-bf83-4590-ba3e-7741632ca85c" x="515" y="239" width="6" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b5874170-1405-4708-8640-00941c6730ec" x="7" y="84" width="47" height="14"/>
+				<textElement/>
+				<text><![CDATA[Histórico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b314625d-da24-4cbe-95db-5e359e6202d8" x="279" y="84" width="170" height="14"/>
+				<textElement/>
+				<text><![CDATA[Obs.Comportamental:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6ed7d80b-30c5-4c28-a91b-851e3add178c" x="6" y="183" width="86" height="14"/>
+				<textElement/>
+				<text><![CDATA[Obs. de Rotina:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1e3a167c-8dd0-45f9-996a-6eaa05849d77" x="7" y="98" width="255" height="72"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{historico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9a1e523f-1f3c-49b8-93cc-8b16172ef6b7" x="279" y="98" width="276" height="72"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{comportamento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1284388c-818d-4fbc-9063-51c57603124c" x="7" y="197" width="255" height="72"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{rotina}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b7d766e9-b9d0-4066-8c3e-ed00f41d809d" x="2" y="272" width="33" height="14"/>
+				<textElement/>
+				<text><![CDATA[Dono:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ad9ccba9-7e8c-4cb7-b6e5-6eee1bde7be4" x="41" y="272" width="243" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dono}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5c086cbd-bb53-4a83-a585-0d99eab776f8" x="444" y="31" width="107" height="14"/>
+				<textElement/>
+				<text><![CDATA[Data de Nascimento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7c0514d1-f8b1-467c-ac07-d23fb1f07c28" x="444" y="45" width="107" height="14"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{nascimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="255f6353-5788-4116-8c3c-bc283fc323c9" x="2" y="286" width="67" height="14"/>
+				<textElement/>
+				<text><![CDATA[Obs. Vacinas:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ed0311da-2cca-4b72-9329-9e54123bc7c0" x="74" y="287" width="481" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.000">
+				<reportElement uuid="87a31f90-1723-4061-92be-1cf9ba4c5a74" x="474" y="3" width="37" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{peso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="123d7c86-dca1-4620-a471-5af805f8187f" x="3" y="304" width="47" height="14"/>
+				<textElement/>
+				<text><![CDATA[Vacinas:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eea050a8-c9c9-41cd-bf05-98ed9a78c01c" x="278" y="304" width="30" height="14"/>
+				<textElement/>
+				<text><![CDATA[Dose:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ab586d69-778e-4059-b576-54d4170f430f" x="455" y="304" width="100" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Data de Aplicação:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement uuid="2b39839d-1e6a-49c8-b28d-2172bbea0405" mode="Transparent" x="2" y="81" width="260" height="89"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="d936dd27-0130-4a5f-8775-9a7ff44e816d" mode="Transparent" x="275" y="81" width="280" height="89"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="d2f1bf67-af6c-478a-8155-f84d88a5964d" mode="Transparent" x="2" y="178" width="260" height="91"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="2605527b-9809-463c-aa43-567b98d57c44" mode="Transparent" x="275" y="178" width="280" height="91"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement uuid="a32d7e80-823b-4e23-8c16-600b0d5e58c5" mode="Transparent" x="2" y="1" width="553" height="72"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f6236302-1f28-466b-8464-b7e5faf624bf" x="3" y="4" width="272" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{vacina}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e73cd7ff-353f-4cb0-b79d-34b3183603eb" x="279" y="4" width="82" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dose}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e4851a1e-549f-4d1c-8407-ecd8cb2dad70" x="455" y="4" width="100" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{aplicar}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement uuid="ca5eeefa-b490-42db-b8d2-f0a59d513b5c" mode="Transparent" x="0" y="0" width="555" height="20"/>
+			</rectangle>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement uuid="8ab5cae0-7009-4484-b536-db3f2e2b7304" x="2" y="4" width="553" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="0f9505f5-4769-4e35-817a-1deccdd07dd5" x="435" y="5" width="80" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="36ae2f66-5033-4d4d-b6f1-5143c5116f2a" x="515" y="5" width="40" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="41a78825-faf3-4ce8-9188-20f0178447c4" x="3" y="5" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Aniversarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="20e0608a-f315-45c6-83b1-1506c9cdebba">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<parameter name="tipo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select nome, to_char(to_date(data_nasc, 'dd/mm/yyyy'),'dd/mm') as aniversario, telefone1,
+telefone2, email, facebook, instagram, (select logotipo from relatorio_config) as logo from pessoa where tipo in('$P!{tipo}') and extract(month from to_date(data_nasc, 'dd/mm/yyyy')) = extract(month from current_date)
+and data_nasc not in('  /  /    ') order by aniversario;]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="aniversario" class="java.lang.String"/>
+	<field name="telefone1" class="java.lang.String"/>
+	<field name="telefone2" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="facebook" class="java.lang.String"/>
+	<field name="instagram" class="java.lang.String"/>
+	<field name="logo" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement uuid="aa27c2c6-4aba-4671-8bc1-6ef81ce63d8d" x="122" y="8" width="295" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" isUsingCache="true" isLazy="true" onErrorType="Icon">
+				<reportElement uuid="21f875ee-a96f-47ef-a374-637f33e64658" x="0" y="0" width="100" height="36"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream((byte[])$F{logo})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b6fcf8d5-27be-493f-9dbd-240a393f6e42" x="0" y="19" width="233" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5e7f5d50-ef9c-41dc-b292-aeb6a7796ca1" x="234" y="19" width="50" height="14"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aniversario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fbad0801-e385-40d2-9f9f-fbc24580ee63" x="284" y="19" width="79" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefone1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="884e9032-f971-45a1-b687-c85add4484ed" x="363" y="19" width="85" height="14"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{telefone2}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="74dc1b27-1d7c-40e1-895a-72c9f7ba5d86" x="0" y="1" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="d5f81933-a88c-4999-9894-09655e55534c" x="0" y="33" width="57" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Facebook:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fde9767e-4918-45df-99ca-910c0a3f9c32" x="0" y="45" width="234" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{facebook}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fdd33428-d3f9-40d6-ad98-4890ee56fde5" x="0" y="5" width="100" height="14"/>
+				<textElement/>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b03caae1-3c85-4ff6-8280-707760617a7a" x="234" y="6" width="50" height="13"/>
+				<textElement/>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dfb9747e-cbee-4d0a-88d5-216597cc8ac7" x="284" y="6" width="100" height="13"/>
+				<textElement/>
+				<text><![CDATA[Telefones:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f7e53d09-5a65-4fb2-be42-3cd6faa4e228" x="284" y="33" width="179" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="06b93b1b-91d3-412d-bf75-8d995bc0b9ab" x="284" y="45" width="271" height="12"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b0ccc32f-6314-4353-864a-b4f913de74f4" x="457" y="2" width="80" height="14"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="02ce5fa0-ff7d-4bad-9ce0-23aec326acc8" x="537" y="2" width="18" height="14"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

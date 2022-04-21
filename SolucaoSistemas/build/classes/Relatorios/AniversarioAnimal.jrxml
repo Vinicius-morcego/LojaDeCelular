@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AniversarioAnimal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df714507-333a-41d8-b0a8-c51c5c56def9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select a.nome, to_char(to_date(nascimento, 'dd/mm/yyyy'),'dd/mm') as niver, p.email, p.facebook,(select logotipo from relatorio_config where codigo = 1) from animais a inner join pessoa p
+on p.codigo = a.dono where extract(month from(to_date(nascimento, 'dd/mm/yyyy'))) = extract(month from (current_date)) and nascimento not in('  /  /    ') order by niver;]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="niver" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="facebook" class="java.lang.String"/>
+	<field name="logotipo" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement x="182" y="17" width="197" height="21" uuid="f8fedfa6-8f9c-4d0e-b15b-adb8c99c428e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Animais aniversariantes do mês]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" onErrorType="Icon">
+				<reportElement x="3" y="2" width="100" height="50" uuid="aea6bccb-13db-4fb6-95ec-7c3458fe3c6a"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream((byte[])$F{logotipo})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="3" width="139" height="14" uuid="eb024066-c54a-4dc6-a449-869683e630ee"/>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="3" width="43" height="14" uuid="081744c3-fdad-4f22-9f4d-04e30809ee39"/>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="1" width="121" height="14" uuid="b1e3eca4-e848-4c35-8a4e-8113639c729d"/>
+				<text><![CDATA[Email:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="3" width="156" height="14" uuid="be5d3794-9f1b-43b4-9297-f0aee5f7ee42"/>
+				<text><![CDATA[Facebook:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="555" height="1" uuid="75a79268-a4ca-4c10-9144-7d40db7f2c25"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="139" height="14" uuid="e1ace4a8-d0a5-4564-b6ed-2e03e72dba1f"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="139" y="0" width="55" height="14" uuid="48d54fb4-c6d9-4afe-a0d1-559e84cd032d"/>
+				<textFieldExpression><![CDATA[$F{niver}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="0" width="205" height="14" uuid="b8e49561-6e3e-4b26-bfaf-810c2524c098"/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="0" width="156" height="14" uuid="b5bb4eb9-7cd9-4124-9097-b31b7360e64c"/>
+				<textFieldExpression><![CDATA[$F{facebook}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="435" y="3" width="80" height="14" uuid="92fb9705-c737-4506-852d-d7b3abc75876"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="3" width="40" height="14" uuid="b3f3a178-19a7-467a-91fa-6cf7105886e8"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="3" y="1" width="552" height="1" uuid="71515b42-64f5-4740-afca-9382500aaa2c"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

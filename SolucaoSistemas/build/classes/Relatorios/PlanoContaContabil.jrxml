@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PlanoContaContabil" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6844aa5a-01d9-45d3-ae86-4d2a218b6f8e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select tipo, grupo, subgrupo, conta_sintetica, contabil, descricao from planocontas order by tipo;]]>
+	</queryString>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="grupo" class="java.lang.String"/>
+	<field name="subgrupo" class="java.lang.String"/>
+	<field name="conta_sintetica" class="java.lang.String"/>
+	<field name="contabil" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<group name="categoria">
+		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
+		<groupHeader>
+			<band height="61">
+				<line>
+					<reportElement x="0" y="1" width="555" height="1" uuid="96adbf07-e502-4463-9aea-ed8f1dd0fdce"/>
+				</line>
+				<textField>
+					<reportElement x="0" y="46" width="344" height="14" uuid="067ed75b-ee95-47b1-83c0-de037d2e35cb"/>
+					<textFieldExpression><![CDATA[$F{conta_sintetica}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="4" width="344" height="14" uuid="59f0c01e-8f5a-4a76-bbfc-0a61ecdbb353"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="18" width="344" height="14" uuid="91e2e95f-6570-4ff6-b9b9-5b5c22a8f452"/>
+					<textFieldExpression><![CDATA[$F{grupo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="32" width="344" height="14" uuid="04df38a1-587c-47a9-88f2-86f2c0643e21"/>
+					<textFieldExpression><![CDATA[$F{subgrupo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="14" uuid="ef23f340-095d-475a-8000-d8049e8eaf79"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[PLANO DE CONTAS - CONTÁBIL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="16">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="16" backcolor="#CCCCFF" uuid="4d9a2742-d247-4cca-b26b-2b00476b877f">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 1)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="1" width="65" height="14" uuid="abc339c6-9106-4f56-a193-2966dde63a4e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{contabil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="1" width="279" height="14" uuid="81c07aeb-71af-4768-8ed2-ff9ae6092964"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

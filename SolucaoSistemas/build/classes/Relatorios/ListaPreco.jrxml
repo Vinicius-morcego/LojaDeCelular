@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListaPreco" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9f9b7a8b-2cb8-4ff6-be94-95bca3986a99">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tipo" class="java.lang.String"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select distinct p.codigo, p.nome, p.categoria, p.marca, coalesce(p.valorcusto, 0) as custo, coalesce(p.valorvenda, 0) as venda from produto_servico p
+where p.tipo = '$P!{tipo}' order by p.categoria, p.nome, p.marca;]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="categoria" class="java.lang.String"/>
+	<field name="marca" class="java.lang.String"/>
+	<field name="custo" class="java.lang.Double"/>
+	<field name="venda" class="java.lang.Double"/>
+	<group name="categoriapreco">
+		<groupExpression><![CDATA[$F{categoria}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<textField>
+					<reportElement x="0" y="4" width="555" height="14" uuid="aee21d98-39d0-4b31-9f0d-c4b153af1bee"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="3" width="555" height="1" uuid="885ef844-1113-4b0d-a98c-dc9541e61075"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="18" width="61" height="14" uuid="869e58f0-8b6c-47cc-9b8b-b0d1b4ee5d73"/>
+					<text><![CDATA[Código]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="61" y="18" width="222" height="14" uuid="8e55d331-7502-45fe-89f0-e016e8b275b3"/>
+					<text><![CDATA[Descrição]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="283" y="18" width="133" height="14" uuid="423f2c7e-8355-4c92-8ae5-afc9979dd2f0"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Marca]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="487" y="18" width="68" height="14" uuid="30b170ca-47b5-41d4-875c-e0b01255984b"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Venda]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="416" y="18" width="71" height="14" uuid="a100abbf-f6f7-454d-b206-d6191393db45"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Custo]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="15" uuid="e120b5e3-c607-474e-9a74-ba5a18ecd2d2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="14" backcolor="#CCCCFF" uuid="5b19682e-1836-4099-bbeb-3b085768dbd6">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 1)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0.00">
+				<reportElement x="487" y="0" width="68" height="14" uuid="eecdabc6-d8ea-4b07-8a82-add4be143551"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venda}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="416" y="0" width="71" height="14" uuid="c59b219f-3ba1-47b9-a09d-fd29dc07bc90"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{custo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="283" y="0" width="133" height="14" uuid="8560c035-ebcd-40a1-8015-f17f8ff49751"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="61" height="14" uuid="5d54d6be-e845-4b04-8625-1b43fa6bc00f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="0" width="222" height="14" uuid="9c16fd65-542a-47d0-a1e2-c7d51e6755ec"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="3" width="25" height="12" uuid="4851bef7-b78e-48d3-a31c-74c39d4bc24c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="3" width="124" height="12" uuid="a694ff7c-8a95-4652-a5d3-68eb81de673b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="3" width="80" height="12" uuid="2afa8923-3a61-4229-99b5-7119d9936ee4"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="30c6ffd4-ac28-43b2-a82e-da45a7d36259"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AnaliticoDespesa" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bc530a62-ee21-40e3-adb5-4a46b238fa46">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataBR1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataBR2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.codigo, p.tipo, p.grupo, p.subgrupo as sub, p.conta_sintetica, p.contabil as cont, p.descricao, sum(s.valor) as val, s.formapgto as forma
+from planocontas p
+inner join saida s on s.formapgto = p.codigo
+inner join caixa c on c.codigo = s.caixa
+where to_char(c.data_lancamento, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}'
+group by p.tipo, p.grupo, p.subgrupo, p.conta_sintetica, p.contabil, p.descricao, p.codigo, s.formapgto order by sub;]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="grupo" class="java.lang.String"/>
+	<field name="sub" class="java.lang.String"/>
+	<field name="conta_sintetica" class="java.lang.String"/>
+	<field name="cont" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="val" class="java.lang.Double"/>
+	<field name="forma" class="java.lang.Integer"/>
+	<variable name="soma" class="java.lang.Double" resetType="Group" resetGroup="tips" calculation="Sum">
+		<variableExpression><![CDATA[$F{val}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{val}]]></variableExpression>
+	</variable>
+	<group name="tips">
+		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
+		<groupHeader>
+			<band height="57">
+				<textField>
+					<reportElement x="0" y="42" width="344" height="14" uuid="7f1e3c38-d533-4ea7-9510-51c90d4deede"/>
+					<textFieldExpression><![CDATA[$F{conta_sintetica}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="344" height="14" uuid="9d22d096-a16f-4f07-90fc-666ba0401b87"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="14" width="344" height="14" uuid="5ebd8fa1-90db-4146-bcbd-dddae2a1a01f"/>
+					<textFieldExpression><![CDATA[$F{grupo}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="d4489113-8c20-4758-bec9-9885ea81fbf6"/>
+				</line>
+				<textField>
+					<reportElement x="0" y="28" width="344" height="14" uuid="9b847a3c-9542-48b1-853e-02e1f4492b11"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{sub}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16">
+				<textField pattern="#,##0.00">
+					<reportElement x="453" y="0" width="102" height="14" uuid="038fcb3c-0cd8-44c8-9958-8c95a29d0c4a"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{soma}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="483" y="0" width="10" height="15" uuid="fab8f6f9-633f-44c6-b7db-cfd2104534da"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="422" y="0" width="61" height="15" uuid="38faab4c-2c76-4f03-bce3-1d851d60687b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{dataBR1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="493" y="0" width="60" height="15" uuid="a9c28cb6-cfa6-484c-9f57-5e611c5b608a"/>
+				<textFieldExpression><![CDATA[$P{dataBR2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="134" y="0" width="269" height="14" uuid="48c7a225-b748-47fa-8f51-b27475d14d47"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[RELATÓRIO DE DESPESA - ANALITICO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="15" backcolor="#CCCCFF" uuid="c57aa658-dde9-433a-b4af-84e94a640187">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 1)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="65" height="14" uuid="4a468318-7f88-4051-b4fb-b20776dd8af3"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cont}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="0" width="279" height="14" uuid="a0a46e79-242a-49c9-a172-fb180b4b17b7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="453" y="0" width="102" height="14" uuid="4954383e-97b6-43d7-a6a0-8acb38b9017a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{val}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="#,##0.00">
+				<reportElement x="453" y="0" width="102" height="14" uuid="1d271a94-6c20-4f7c-b137-9f2626e94d76"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

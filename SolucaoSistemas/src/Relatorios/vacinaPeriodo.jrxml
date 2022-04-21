@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vacinaPeriodo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c56e356-51cc-4aeb-8e39-fa1ccbc6d863">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ec241521-9225-4b3e-8140-e3997ddc4a68" x="199" y="0" width="154" height="14"/>
+				<textElement/>
+				<text><![CDATA[Tabela de Vacinas Por Período]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7d1fc132-4fc4-41a2-aa9f-9dc5a8774cb5" x="411" y="1" width="74" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a3a3aaf3-f0d7-494c-8c71-72db2e25f623" x="485" y="1" width="7" height="14"/>
+				<textElement/>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4fcb16a6-a496-429a-9ff2-513db817ef35" x="492" y="1" width="63" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{field}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

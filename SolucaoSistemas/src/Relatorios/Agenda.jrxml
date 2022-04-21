@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Agenda" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a8172917-afa2-42c2-9e06-a18b905f2ff3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataInicial" class="java.lang.String"/>
+	<parameter name="dataFinal" class="java.lang.String"/>
+	<parameter name="dataBR1" class="java.lang.String"/>
+	<parameter name="dataBR2" class="java.lang.String"/>
+	<parameter name="veterinario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select a.codigo, to_char(a.data_agenda, 'dd/mm/yyyy') as agendado, a.hora, a.dia, a.atendente,
+a.veterinario, a.cliente, n.nome, a.telefone1, a.telefone2, a.situacao, (select logotipo from
+relatorio_config where codigo = 1) as logo from agendamento a left join animais n on n.codigo = a.animal where a.veterinario like '$P!{veterinario}%' and to_char(a.data_agenda, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}' order by a.codigo;]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Integer"/>
+	<field name="agendado" class="java.lang.String"/>
+	<field name="hora" class="java.lang.String"/>
+	<field name="dia" class="java.lang.String"/>
+	<field name="atendente" class="java.lang.String"/>
+	<field name="veterinario" class="java.lang.String"/>
+	<field name="cliente" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="telefone1" class="java.lang.String"/>
+	<field name="telefone2" class="java.lang.String"/>
+	<field name="situacao" class="java.lang.String"/>
+	<field name="logo" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6d1e67cb-886b-44d2-9c09-8eb43487e45c" x="328" y="18" width="158" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Controle de Agendamentos]]></text>
+			</staticText>
+			<image scaleImage="FillFrame" isUsingCache="true" isLazy="true" onErrorType="Icon">
+				<reportElement uuid="8e3067e3-05ce-4719-a032-7046b159631c" x="0" y="0" width="111" height="47"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream((byte[]) $F{logo})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="fe308aa3-3ea2-4df6-901e-c898a8a0706d" x="645" y="18" width="81" height="14"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4e69e6a7-53b2-4595-9440-c107a49b0579" x="726" y="18" width="10" height="14"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0b90df8d-dcf4-4ee9-a007-4efecc689435" x="736" y="18" width="66" height="14"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement uuid="86bd6a33-8437-4d0b-a444-3c90fbbfb379" x="0" y="0" width="802" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="274ff23f-635c-41c0-9aac-7aa169cbb982" x="0" y="17" width="802" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="35332338-446a-4939-926d-1ccbe986773e" x="0" y="2" width="64" height="14"/>
+				<textElement/>
+				<text><![CDATA[Agendado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c9ce34fe-2b75-46d3-9a13-b223a51c4435" x="64" y="2" width="47" height="14"/>
+				<textElement/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d929cd37-75d4-45aa-8c54-7b214f478d88" x="111" y="2" width="62" height="14"/>
+				<textElement/>
+				<text><![CDATA[Dia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b8d3053c-74cf-4791-bcdb-ef11fce7352d" x="173" y="2" width="155" height="14"/>
+				<textElement/>
+				<text><![CDATA[Veterinário:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9b0db520-9235-4f76-8554-0eaa0ad60521" x="328" y="2" width="158" height="14"/>
+				<textElement/>
+				<text><![CDATA[Animal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="17f2e255-3b47-4aa5-abb4-a127f036d6d6" x="457" y="2" width="166" height="14"/>
+				<textElement/>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7fb1c3d3-f2a8-4e19-ae39-537c5457eabf" x="640" y="1" width="62" height="14"/>
+				<textElement/>
+				<text><![CDATA[Telefone:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dae303e0-f34f-4cb4-a2b4-239e3a22335f" x="726" y="2" width="76" height="14"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Situação:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement uuid="168a0992-806d-46a6-a4b8-4e2a45a20a8b" x="0" y="0" width="64" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{agendado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bfe36e99-e034-46ba-9331-b41a1ac2ccde" x="64" y="0" width="47" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="99f92735-3147-4923-b409-9b0088a5bb48" x="111" y="0" width="62" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="69aecbd3-d9c3-4f25-8f90-ee868ffc6877" x="173" y="0" width="155" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{veterinario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8e881e09-f9a1-49f5-b7f0-156f0ed0e1ec" x="328" y="0" width="129" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="016aeb93-dbd6-4402-b294-b1e66c3d6648" x="457" y="0" width="183" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec559fe2-314f-426a-a7f9-b6ce6455d54b" x="640" y="0" width="79" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{telefone1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4237a326-550a-40c7-a392-201354a4f500" x="726" y="0" width="76" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{situacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<line>
+				<reportElement uuid="1362c462-90f4-43d6-b39d-5ff28af5e2c4" x="0" y="0" width="802" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="4e8f4ed9-ef22-4890-92db-ff2d181ab1e3" x="685" y="5" width="80" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="6fa31035-7a3a-4ed4-84e2-681facdc15c5" x="765" y="5" width="37" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="4a5852cb-b219-4e6b-aec0-ccf308e16bc5" x="0" y="5" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

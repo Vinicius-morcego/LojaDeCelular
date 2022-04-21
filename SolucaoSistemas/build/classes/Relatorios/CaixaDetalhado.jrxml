@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CaixaDetalhado" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac24ad63-2b67-4ae1-aa41-90b3a5898292">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Banco"/>
+	<parameter name="inicio" class="java.lang.String"/>
+	<parameter name="fim" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select c.codigo as cod, e.valor, e.tipo,
+p.descricao as plano, to_char(c.data_lancamento, 'dd/mm/yyyy') as data, to_char(c.datacadastro, 'HH24:mi:ss') as hora,
+e.observacao
+from entrada e inner join caixa c on c.codigo = e.caixa
+inner join planocontas p on p.codigo = e.formapgto
+where to_char(c.data_lancamento, 'yyyy-mm-dd')
+between '$P!{inicio}' and
+'$P!{fim}'
+union
+select c.codigo as cod, s.valor, s.tipo,
+p.descricao as plano, to_char(c.data_lancamento, 'dd/mm/yyyy') as data,
+to_char(c.datacadastro, 'HH24:mi:ss') as hora, s.observacao
+from saida s inner join caixa c on c.codigo = s.caixa
+inner join planocontas p on p.codigo = s.formapgto
+where to_char(c.data_lancamento, 'yyyy-mm-dd')
+between '$P!{inicio}' and
+'$P!{fim}' order by data;]]>
+	</queryString>
+	<field name="cod" class="java.lang.Integer"/>
+	<field name="valor" class="java.lang.Double"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="plano" class="java.lang.String"/>
+	<field name="data" class="java.lang.String"/>
+	<field name="hora" class="java.lang.String"/>
+	<field name="observacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement x="121" y="0" width="411" height="14" uuid="d9c68f27-8429-4f22-b524-9c7d9f836f5b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Plano de contas / Histórico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="575" y="0" width="85" height="14" uuid="6c858810-4092-456c-9f5b-ef97819dd70c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Valor R$:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="660" y="1" width="66" height="14" uuid="3a7dd3f1-781b-41f6-ac63-3c3de15e9b38"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="118" height="14" uuid="f7af9b27-9c3d-480f-ac39-dabb54d17b94"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Data/Hora:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="751" height="14" backcolor="#CCCCFF" uuid="8b70a69e-1102-4f7b-90e1-e95e8e771822">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 1)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="660" y="0" width="76" height="14" uuid="5ad7207f-4fff-4d13-b356-f6e438a8aea4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="0" width="197" height="14" uuid="913ab9a4-9619-4c0f-a02a-09072fa13bbf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{plano}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="0" width="50" height="14" uuid="900528de-cbac-4829-bebd-b38e1a9ec748"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="325" y="0" width="250" height="14" uuid="a2b68e62-9710-46bd-a821-da72e965f692"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="575" y="0" width="85" height="14" uuid="40f25b3f-f75d-49a9-8263-7b3cb2dce67c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="0" width="68" height="14" uuid="9b996e3a-eb86-416a-9c7f-3b112282e1e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

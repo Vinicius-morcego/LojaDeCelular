@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.14.0.final using JasperReports Library version 6.14.0-2ab0d8625be255bf609c78e1181801213e51db8f  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Vendas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5b290d25-21aa-4421-8cb4-621aa214e072">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="25"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="119"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="869"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Banco"/>
+	<parameter name="dataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataBR1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataBR2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select lpad(cast(v.codigo as varchar), 11, '0') as cod, v.funcionario, v.total, sum(p.valorcusto) as custo, (v.total - sum(p.valorcusto)) as lucro from venda v inner join itensvenda i on v.codigo = i.venda
+inner join produto_servico p on i.produto = p.codigo where to_char(v.data_pedido, 'yyyy-mm-dd') between '$P!{dataInicial}' and '$P!{dataFinal}' and v.situacao not in('Cancelado')  group by v.codigo, v.funcionario order by cod;]]>
+	</queryString>
+	<field name="cod" class="java.lang.String"/>
+	<field name="funcionario" class="java.lang.String"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="custo" class="java.lang.Double"/>
+	<field name="lucro" class="java.lang.Double"/>
+	<variable name="total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
+	</variable>
+	<variable name="custo" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{custo}]]></variableExpression>
+	</variable>
+	<variable name="lucro" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{lucro}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="346" y="0" width="100" height="14" uuid="70cb1496-0afc-4fea-8c5b-db317dffdca4"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Relatório de Vendas]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="668" y="0" width="57" height="14" uuid="8b155d91-4393-4ae6-a49f-817c3081b766"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="745" y="0" width="57" height="14" uuid="202900e8-c316-420d-b044-844e4be53d5c"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="725" y="0" width="20" height="14" uuid="9af30ad6-6505-471c-b2d0-6be78e4a3ddf"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[a]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="14" uuid="d025263e-5d3d-46d5-a73d-8b8261d50d1a"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nº do Pedido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="202" height="14" uuid="c6ee6131-55ec-4148-ab1b-fe27ebb1a6f1"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Funcionário:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="560" y="2" width="80" height="14" uuid="c6ccde34-ca3f-4917-b5ce-eeed3af47cad"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Total do Pedido:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="648" y="2" width="77" height="14" uuid="5db15d6e-34a5-442e-bb48-bdb6a3136d5b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Total do Custo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="725" y="1" width="77" height="14" uuid="4eb004d9-c68c-422e-b4fb-dfb21198100d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Lucro Liquido]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="15" backcolor="#CCCCFF" uuid="0af2b79c-5e39-4585-a5e3-5affc635b832">
+					<printWhenExpression><![CDATA[new Boolean($V{COLUMN_COUNT}.intValue() % 2 == 1)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="100" y="0" width="346" height="14" uuid="c5292e04-a28c-457a-81e5-3688f5a64116"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{funcionario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="705" y="0" width="77" height="14" uuid="6064d32d-e272-4868-8fb6-ddff2db78277"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lucro}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="648" y="0" width="77" height="14" uuid="814a0143-b2bd-4c12-b7d4-9317c7c16c84"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{custo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="560" y="0" width="80" height="14" uuid="05cde32e-5cb6-46e4-9972-128db51acb44"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="14" uuid="267bcf67-4b32-4f9f-92c1-5724d381e8e0"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cod}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="68" height="14" uuid="6bbcf039-d1db-4cbb-a313-acdd58f18b33"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="74" y="0" width="26" height="14" uuid="81d12998-1093-4f99-8775-4aa2647de275"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="560" y="0" width="80" height="14" uuid="c1b60ca0-3283-479c-8e06-599630e5f92f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="648" y="0" width="77" height="14" uuid="d7d8a35a-7174-4d39-97b1-024857bc3982"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{custo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="725" y="0" width="77" height="14" uuid="6e0637db-4636-4c81-ae3d-327183a03af5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{lucro}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="802" height="1" uuid="afa72817-797c-454c-9e05-54fd4e0ee587"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

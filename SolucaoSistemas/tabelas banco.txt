@@ -1,0 +1,153 @@
+CREATE TABLE public.agendamento
+(
+  codigo integer NOT NULL DEFAULT nextval('agendamento_codigo_seq'::regclass),
+  data_agenda date,
+  hora character varying(20),
+  dia character varying(30),
+  situacao character varying(30),
+  animal integer DEFAULT 0,
+  telefone1 character varying(40),
+  telefone2 character varying(40),
+  atendente character varying(100),
+  veterinario character varying(100),
+  observacao character varying(200),
+  cadastro timestamp with time zone,
+  atendimento integer,
+  cliente character varying(100),
+  CONSTRAINT agendamento_pkey PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.agendamento
+  OWNER TO postgres;
+
+CREATE TABLE public.atendimento
+(
+  codigo integer NOT NULL DEFAULT nextval('atendimento_codigo_seq'::regclass),
+  data_entrada date,
+  hora_entrada character varying(30),
+  data_saida date,
+  hora_saida character varying(30),
+  cliente integer,
+  telefone character varying(30),
+  veterinario character varying(100),
+  atendente character varying(100),
+  animal integer,
+  identificacao character varying(100),
+  acessorios character varying(100),
+  vacinas character varying(200),
+  alimentacao character varying(200),
+  fobia character varying(200),
+  procedimento character varying(300),
+  prescricao character varying(300),
+  exame character varying(300),
+  temperatura character varying(50),
+  frequencia_cardiaca character varying(50),
+  frequencia_respiral character varying(50),
+  tpc character varying(50),
+  lindofonodos character varying(100),
+  mucosa character varying(100),
+  hidratacao character varying(100),
+  ectoparasitas character varying(100),
+  exames_solicitados character varying(300),
+  situacao character varying(50),
+  problema_atendimento character varying(300),
+  desconto double precision,
+  total double precision,
+  datacadastro timestamp with time zone,
+  CONSTRAINT atendimento_pkey PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.atendimento
+  OWNER TO postgres;
+
+CREATE TABLE public.comissao
+(
+  codigo integer NOT NULL DEFAULT nextval('comissao_codigo_seq'::regclass),
+  funcionario integer,
+  valor double precision,
+  datacadastro timestamp with time zone,
+  produto integer,
+  quantidade double precision,
+  total double precision,
+  CONSTRAINT comissao_pkey PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.comissao
+  OWNER TO postgres;
+
+CREATE TABLE public.itensorcamento
+(
+  codigo integer NOT NULL DEFAULT nextval('itensorcamento_codigo_seq'::regclass),
+  produto integer,
+  quantidade double precision,
+  unitario double precision,
+  subtotal double precision,
+  orcamento integer,
+  CONSTRAINT itensorcamento_pkey PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.itensorcamento
+  OWNER TO postgres;
+
+CREATE TABLE public.itensvenda
+(
+  codigo integer NOT NULL DEFAULT nextval('itensvenda_codigo_seq'::regclass),
+  produto integer,
+  quantidade double precision,
+  unitario double precision,
+  subtotal double precision,
+  venda integer,
+  CONSTRAINT itensvenda_pkey PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.itensvenda
+  OWNER TO postgres;
+
+CREATE TABLE public.orcamento
+(
+  codigo integer NOT NULL DEFAULT nextval('orcamento_codigo_seq'::regclass),
+  cliente integer,
+  animal integer,
+  desconto double precision,
+  total double precision,
+  funcionario character varying(100),
+  veterinario character varying(100),
+  situacao character varying(50),
+  datacadastro time with time zone,
+  CONSTRAINT orcamento_pkey PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.orcamento
+  OWNER TO postgres;
+
+CREATE TABLE public.venda
+(
+  codigo integer NOT NULL DEFAULT nextval('venda_codigo_seq'::regclass),
+  cliente integer,
+  animal integer,
+  desconto double precision,
+  total double precision,
+  situacao character varying(30),
+  datacadastro timestamp with time zone,
+  funcionario character varying(100),
+  veterinario character varying(100),
+  CONSTRAINT venda_pkey PRIMARY KEY (codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.venda
+  OWNER TO postgres;
+

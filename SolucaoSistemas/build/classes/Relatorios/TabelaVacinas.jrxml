@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TabelaVacinas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9eddb7ab-96d9-4e57-91fe-bdbf48143ac2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="dataSQL1" class="java.lang.String"/>
+	<parameter name="dataSQL2" class="java.lang.String"/>
+	<parameter name="dataBR1" class="java.lang.String"/>
+	<parameter name="dataBR2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select v.animal, a.nome, v.vacina, v.dose, to_char(data_aplic, 'dd/mm/yyyy') as datas, p.telefone1, p.telefone2, (select logotipo from relatorio_config where codigo = 1) as logo
+from vacina_animal v inner join animais a on a.codigo = v.animal
+inner join pessoa p on p.codigo = a.dono where to_char(data_aplic, 'yyyy-mm-dd') between '$P!{dataSQL1}' and '$P!{dataSQL2}'
+order by a.nome;]]>
+	</queryString>
+	<field name="animal" class="java.lang.Integer"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="vacina" class="java.lang.String"/>
+	<field name="dose" class="java.lang.String"/>
+	<field name="datas" class="java.lang.String"/>
+	<field name="telefone1" class="java.lang.String"/>
+	<field name="telefone2" class="java.lang.String"/>
+	<field name="logo" class="java.lang.Object"/>
+	<group name="animais">
+		<groupExpression><![CDATA[$F{animal}]]></groupExpression>
+		<groupHeader>
+			<band height="35">
+				<textField>
+					<reportElement uuid="85830420-acb5-45f9-96b7-d6f1b22143ad" x="100" y="3" width="47" height="14"/>
+					<textElement textAlignment="Left"/>
+					<textFieldExpression><![CDATA[$F{animal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="7752731b-7df9-457c-85b9-72d2205dc19d" x="185" y="3" width="153" height="14"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="5f70ccec-b534-48ca-85d8-137a1f5d1f11" x="0" y="3" width="100" height="14"/>
+					<textElement/>
+					<text><![CDATA[Código do animal:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4d2ff105-1ee4-4452-8fd2-a0a5fa4733fe" x="147" y="3" width="38" height="14"/>
+					<textElement/>
+					<text><![CDATA[Nome:]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="9014a827-af07-4cdd-9f53-e1ff51de0e44" x="0" y="0" width="555" height="1"/>
+				</line>
+				<textField>
+					<reportElement uuid="441f73e9-3253-46fb-b2bd-d8b2c96da8ac" x="409" y="3" width="70" height="14"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{telefone1}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="2715577c-5921-4925-8d04-74964a73eeaf" x="479" y="3" width="76" height="14"/>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{telefone2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="527d102c-2572-4b35-b247-655ce39d3fca" x="0" y="20" width="100" height="14"/>
+					<textElement/>
+					<text><![CDATA[Vacina:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="768e2154-0d60-4ecb-9349-e6dfcf224c06" x="292" y="20" width="100" height="14"/>
+					<textElement/>
+					<text><![CDATA[Dose:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="5c7fbbd8-b419-4893-83c6-195b43348fb5" x="438" y="20" width="100" height="14"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[Data de Aplicação:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="924e43a3-ed4f-44ee-900a-dcf7f14a10ab" x="355" y="3" width="54" height="14"/>
+					<textElement/>
+					<text><![CDATA[Telefones:]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="a436ca3d-9a5e-4afb-a092-d902c9e08ed0" x="0" y="19" width="555" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8ccc798f-459d-429d-a2a6-16811b00a583" x="171" y="0" width="221" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tabela de Vacinas]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b6346241-8fbc-469d-bd1c-cff09efd102c" x="422" y="0" width="63" height="16"/>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dcc78562-ebe5-4f52-bc04-fa11a278bc7d" x="485" y="0" width="13" height="15"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a9a815f1-0f3d-4e50-b4b1-cad92df7f65e" x="498" y="0" width="57" height="15"/>
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dataBR2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1e727ab2-40e5-40a0-b82e-af52a1494249" x="0" y="0" width="292" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{vacina}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aff8acf7-9b98-4074-bd9f-45f1c4088937" x="292" y="0" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{dose}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e452582d-3158-4e60-be0d-2cb3cb1c9191" x="438" y="0" width="100" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{datas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f4a78457-7dca-49b0-a6c4-3b78b3ebdba8" x="435" y="4" width="80" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="e62ea83d-bc73-4af4-9cbd-1240b2d34d1c" x="515" y="4" width="40" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="8de034e8-5e6c-4e7e-aa33-7e0592761ef3" x="0" y="4" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

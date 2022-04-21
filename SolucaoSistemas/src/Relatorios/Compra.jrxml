@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Compra" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="33e34d70-8f41-4ebb-939c-da4c72fd8bfe">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="datainicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="datafinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="databr1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="databr2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select to_char(c.datacompra, 'dd/mm/yyyy') as datacomp, c.numeronota, f.nome, c.total from compra c
+inner join fisico f on f.codigo = c.funcionario where to_char(c.datacompra, 'yyyy-mm-dd')
+between '$P!{datainicial}' and '$P!{datafinal}' order by datacomp;]]>
+	</queryString>
+	<field name="datacomp" class="java.lang.String"/>
+	<field name="numeronota" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="total" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="417" y="0" width="65" height="14" uuid="61086929-2040-4514-8685-72dc0ee20a01"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{databr1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="482" y="0" width="12" height="14" uuid="17b5f976-3210-4f6a-a14b-dbd728916a1d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[a]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="494" y="0" width="61" height="14" uuid="3dbc5d7b-b6c3-44db-9d8c-be4aa85091bc"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{databr2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="189" y="0" width="188" height="14" uuid="8a828eab-a59d-48f4-9fe7-4e4144dfaef7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Relatório de Compras]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="100" height="14" uuid="92ddf4ee-ccc1-4d74-b34e-06262564a7b7"/>
+				<text><![CDATA[Data da compra:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="900a4352-6c9b-4181-80bc-7803e29ed1ea"/>
+			</line>
+			<staticText>
+				<reportElement x="100" y="1" width="89" height="14" uuid="f7aab808-7a74-4599-8bcf-ab9d62b25efe"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Numero da nota:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="1" width="253" height="14" uuid="cbb8aa55-67f9-4b53-a3b0-121dc43cc2e4"/>
+				<text><![CDATA[Funcionário:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="1" width="92" height="14" uuid="58c91e5c-4605-4475-8022-3cac73820495"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="15" width="75" height="14" uuid="d99fa5ec-d3a5-442e-8c74-3b9ec8ad46b2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{datacomp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="15" width="89" height="14" uuid="c746c92f-78c4-4e94-b43a-1383260d7c83"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{numeronota}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="15" width="253" height="14" uuid="fbaba5d6-2506-4668-b0cb-6a254977e866"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="463" y="15" width="92" height="14" uuid="84ef5152-6120-4fdb-b464-4b2dc46f448f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement x="0" y="5" width="100" height="14" uuid="87ff3cf7-9a40-4a34-9ce3-fb7a9dd0b624"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="9502505c-20b3-41ed-a370-354f6e83ef52"/>
+			</line>
+			<textField>
+				<reportElement x="435" y="5" width="80" height="14" uuid="293933cc-28a6-417c-a744-d2420a0d9d64"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="515" y="5" width="40" height="14" uuid="6f5c5c43-0895-46a7-9106-8ac1a2a86566"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
